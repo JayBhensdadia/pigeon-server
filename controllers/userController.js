@@ -1,10 +1,28 @@
 const express = require('express');
 const UserModel = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
+const generateToken = require('../auth/generateToken');
 
+//login controller
+const loginController = asyncHandler( async (req,res)=>{
+    const {name, password} = req.body;
+    const user = await UserModel.findOne({name});
+    const isPaswordMatching = user.password === password;
+    if(user && isPaswordMatching){
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id)
+        });
+    }else{
+        res.status(411).json({msg:"invalid username or password"});
+        throw new Error("login attempt with invalid username or password");
+    }
+} );
 
-const loginController = ()=>{};
-
+//registration controller
 const registerController = asyncHandler(async (req,res)=>{
     const {name, email, password} = req.body;
 
@@ -31,9 +49,16 @@ const registerController = asyncHandler(async (req,res)=>{
     //create an entry to database
     const user = await UserModel.create({name, email, password});
     if(user){
-        res.json("user entery added to database");
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id)
+        });
     }else{
-        res.status(500).json({msg:"unable to make database entry"});
+        res.status(500).json({msg:"unable to make entry in database"});
+        throw new Error("unable to make entry in database");
     }
 
 });
