@@ -9,6 +9,7 @@ app.get("/",(req,res)=>{
     res.send("Hi there");
 })
 
+//create db schema
 
 app.listen(PORT,()=>{
     console.log("server process running on port 5500");
