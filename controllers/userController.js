@@ -7,7 +7,7 @@ const generateToken = require('../auth/generateToken');
 const loginController = asyncHandler( async (req,res)=>{
     const {name, password} = req.body;
     const user = await UserModel.findOne({name});
-    const isPaswordMatching = user.password === password;
+    const isPaswordMatching = user.matchPassword(password);
     if(user && isPaswordMatching){
         res.json({
             _id: user._id,
@@ -24,6 +24,8 @@ const loginController = asyncHandler( async (req,res)=>{
 
 //registration controller
 const registerController = asyncHandler(async (req,res)=>{
+
+    console.log("request is here");
     const {name, email, password} = req.body;
 
     //check for all fields
