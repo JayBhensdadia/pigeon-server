@@ -2,7 +2,7 @@ import user from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 
 
-
+//register
 export const register = async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
   try {
@@ -19,6 +19,8 @@ export const register = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+//login
 export const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -40,6 +42,8 @@ export const login = async (req, res) => {
     res.status(500).json({ error: error });
   }
 };
+
+//validUser
 export const validUser = async (req, res) => {
   try {
     const validuser = await user

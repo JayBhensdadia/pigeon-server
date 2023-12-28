@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 import user from '../models/userModel.js';
 
+
+//authentication middleware
 export const Auth = async (req, res, next) => {
   try {
     let token = req.headers.authorization.split(' ')[0]; //when using browser this line

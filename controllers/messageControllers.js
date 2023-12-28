@@ -2,6 +2,8 @@ import Message from '../models/messageModel.js';
 import user from '../models/userModel.js';
 import Chat from '../models/chatModel.js';
 
+
+//send message
 export const sendMessage = async (req, res) => {
   const { chatId, message } = req.body;
   try {
@@ -27,6 +29,9 @@ export const sendMessage = async (req, res) => {
     res.status(500).json({ error: error });
   }
 };
+
+
+//get message
 export const getMessages = async (req, res) => {
   const { chatId } = req.params;
   try {
